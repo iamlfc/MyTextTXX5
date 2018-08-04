@@ -113,8 +113,9 @@ public class FileDetail_A extends AppCompatActivity {
             }
             cacheFile.delete();
         }
+// 测试下 到底成功没
 
-        // TODO: 2018/8/4  粗略保证一定时间间隔内 读取sd文件 而不是重复获取网络文件
+// TODO: 2018/8/4  粗略保证一定时间间隔内 读取sd文件 而不是重复获取网络文件
         // TODO: 2018/8/4  记录下打开app 应用的时间 如果文件最后修改时间 在打开app之前 则需要删除并新建文件
         // TODO: 2018/8/4  判断文件写入时间 如果超过时间差则删除并新建文件 否则继续使用原始文件
 
