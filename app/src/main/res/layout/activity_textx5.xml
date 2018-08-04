@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/titletv"
+        android:layout_width="match_parent"
+        android:layout_height="35dip"
+        android:layout_alignParentTop="true"
+        android:background="#ff99cc00"
+        android:gravity="center"
+        android:text="首页"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/titletv"/>
+
+    <LinearLayout
+        android:id="@+id/toolbar1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ff99cc00"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnBack1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            android:id="@+id/btnForward1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher"/>
+
+
+        <ImageButton
+            android:id="@+id/btnHome1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            android:id="@+id/btnRefresh1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2.5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@mipmap/ic_launcher"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/toolbar1"
+        android:layout_below="@id/progressBar1">
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="网页由view.inews.qq.com提供\nQQ浏览器X5内核提供技术支持"-->
+        <!--android:textColor="#6F7476"-->
+        <!--android:textSize="18sp"-->
+        <!--android:paddingTop="10dip"-->
+        <!--android:lineSpacingExtra="5dp"/>-->
+
+        <com.lfc.textx5.text1.util.X5WebView
+            android:id="@+id/web_filechooser"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+        </com.lfc.textx5.text1.util.X5WebView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
