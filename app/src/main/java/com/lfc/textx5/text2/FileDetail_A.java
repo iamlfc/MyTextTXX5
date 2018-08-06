@@ -124,6 +124,7 @@ public class FileDetail_A extends AppCompatActivity {
             dialog_pross.show();
         }
 
+
         DownloadManager.Request request_down = new DownloadManager.Request(Uri.parse(url));
         //指定下载路径和下载文件名
         String str_filename = getCacheFile(url).getName().toString().trim();
