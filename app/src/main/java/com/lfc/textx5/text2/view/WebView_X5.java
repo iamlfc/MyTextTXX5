@@ -23,6 +23,10 @@ public class WebView_X5 extends FrameLayout implements TbsReaderView.ReaderCallb
     private TbsReaderView mTbsReaderView;
     private int saveTime = -1;
     private Context context;
+    //文件超时时间
+//    如果超过这个时间 则下载网络文件 并展示  否则 继续展示本地文件
+
+    private double TimeOut = 0.5;//单位 H 小时
 
     public WebView_X5(Context context) {
         this(context, null, 0);
@@ -39,6 +43,13 @@ public class WebView_X5 extends FrameLayout implements TbsReaderView.ReaderCallb
         this.context = context;
     }
 
+    public double getTimeOut() {
+        return TimeOut;
+    }
+
+    public void setTimeOut(double timeOut) {
+        TimeOut = timeOut;
+    }
 
     private OnGetFilePathListener mOnGetFilePathListener;
 
@@ -57,12 +68,12 @@ public class WebView_X5 extends FrameLayout implements TbsReaderView.ReaderCallb
         if (mFile != null && !TextUtils.isEmpty(mFile.toString())) {
             //增加下面一句解决没有TbsReaderTemp文件夹存在导致加载文件失败
             String bsReaderTemp = "/storage/emulated/0/TbsReaderTemp";
-            File bsReaderTempFile =new File(bsReaderTemp);
+            File bsReaderTempFile = new File(bsReaderTemp);
 
             if (!bsReaderTempFile.exists()) {
                 LgU.d("准备创建/storage/emulated/0/TbsReaderTemp！！");
                 boolean mkdir = bsReaderTempFile.mkdir();
-                if(!mkdir){
+                if (!mkdir) {
                     LgU.e("创建/storage/emulated/0/TbsReaderTemp失败！！！！！");
                 }
             }
@@ -113,7 +124,7 @@ public class WebView_X5 extends FrameLayout implements TbsReaderView.ReaderCallb
     }
 
     public void show() {
-        if(mOnGetFilePathListener!=null){
+        if (mOnGetFilePathListener != null) {
             mOnGetFilePathListener.onGetFilePath(this);
         }
     }

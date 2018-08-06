@@ -18,7 +18,7 @@ public class LgU {
     public static final int ERROR = 5;
     public static final int NOTHING = 6;
     public static int LEVEL = VERBOSE;
-    public static final String Tag = "Bee_Worker";
+    public static final String Tag = "TextX5";
 
     public static void v(String message) {
         if (LEVEL <= VERBOSE) {
