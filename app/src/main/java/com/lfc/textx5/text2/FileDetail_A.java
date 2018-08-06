@@ -13,14 +13,18 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.lfc.textx5.R;
 import com.lfc.textx5.text2.view.Md5Tool;
 import com.lfc.textx5.text2.view.WebView_X5;
 import com.lfc.textx5.utils.LgU;
+import com.lfc.textx5.utils.PreferencesUtils;
+import com.lfc.textx5.utils.TimeUtils;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 文件详情
@@ -110,14 +114,23 @@ public class FileDetail_A extends AppCompatActivity {
                 LgU.d("删除空文件！！");
                 cacheFile.delete();
                 return;
+            } else {
+//                如果文件存在 且文件大小不为空  根据时间 判断打开本地还是网络
+//                1  本地 2 网络
+                int opeType = getOpenType(cacheFile);
+                if (opeType == 1) {
+//                    直接展示本地文件
+                    mWebX5.displayFile(cacheFile);
+                    return;
+                } else {
+//                    网络文件  先删除本地  然后下载展示
+                    cacheFile.delete();
+                }
             }
-            cacheFile.delete();
+
         }
 // 测试下 到底成功没
 
-// TODO: 2018/8/4  粗略保证一定时间间隔内 读取sd文件 而不是重复获取网络文件
-        // TODO: 2018/8/4  记录下打开app 应用的时间 如果文件最后修改时间 在打开app之前 则需要删除并新建文件
-        // TODO: 2018/8/4  判断文件写入时间 如果超过时间差则删除并新建文件 否则继续使用原始文件
 
         if (dialog_pross != null) {
             dialog_pross.setTitle("拼命加载中...");
@@ -146,6 +159,44 @@ public class FileDetail_A extends AppCompatActivity {
 
     }
 
+    /**
+     * 根据时间判断
+     *
+     * @param cacheFile
+     * @return 1  本地 2 网络
+     */
+    private int getOpenType(File cacheFile) {
+        // TODO: 2018/8/4  粗略保证一定时间间隔内 读取sd文件 而不是重复获取网络文件
+        // TODO: 2018/8/4  记录下打开app 应用的时间 如果文件最后修改时间 在打开app之前 则需要删除并新建文件
+        // TODO: 2018/8/4  判断文件写入时间 如果超过时间差则删除并新建文件 否则继续使用原始文件
+
+        int type = 2;
+//        先判断 是否 APP打开时间 和文件最后修改时间
+//                                如果 是在应用打开的时间创建的文件  则判断文件时效性
+        long AppTime = PreferencesUtils.getLong(baseContext, "APPStartTime");
+        long FileTime = cacheFile.lastModified();
+        LgU.d("AppTime: " + AppTime + " FileTime : " + FileTime);
+        if (FileTime < AppTime) {
+//            app启动后首次加载该文件 使用网络文件
+            type = 2;
+        } else {
+            double timeout = mWebX5.getTimeOut();
+            long timeoutL = (long) (timeout * 60 * 60 * 1000); //单位毫秒
+
+            SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dff.setTimeZone(TimeZone.getTimeZone("GMT+08"));
+            String ee = dff.format(new Date());
+            LgU.i("当前时间： " + ee);
+            long nowtime = TimeUtils.dateToStamp(ee);
+            if (nowtime - FileTime < timeoutL) {
+//                当前查看时间 在 超时时间内 查看本地文件
+                type = 1;
+            } else
+                type = 2;
+        }
+        return type;
+    }
+
     //广播接受者，接收下载状态
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -171,8 +222,7 @@ public class FileDetail_A extends AppCompatActivity {
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL:
                     LgU.i(">>>下载完成");
-                    //下载完成安装APK
-                    Toast.makeText(baseContext, "下载完成", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(baseContext, "下载完成", Toast.LENGTH_SHORT).show();
                     File fileN = getCacheFile(getFilePath());//new File(getCacheDir(url), getFileName(url))
                     if (fileN.exists())
                         mWebX5.displayFile(fileN);
