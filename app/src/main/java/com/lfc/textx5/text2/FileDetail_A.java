@@ -12,7 +12,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lfc.textx5.R;
 import com.lfc.textx5.text2.view.Md5Tool;
@@ -44,6 +47,7 @@ public class FileDetail_A extends AppCompatActivity {
     private WebView_X5 mWebX5;
     private long mTaskId = 0;//下载ID
     private DownloadManager downloadManager;
+    private TextView mTvTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,15 @@ public class FileDetail_A extends AppCompatActivity {
             setFilePath(filePath);
         }
         mWebX5.show();
+        mTvTop = (TextView) findViewById(R.id.tv_top);
+        mTvTop.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(baseContext, "ok", Toast.LENGTH_SHORT).show();
+                mTvTop.setVisibility(View.GONE);
+                return false;
+            }
+        });
     }
 
     public void setFilePath(String fileUrl) {
@@ -142,6 +155,7 @@ public class FileDetail_A extends AppCompatActivity {
         //指定下载路径和下载文件名
         String str_filename = getCacheFile(url).getName().toString().trim();
         LgU.d("--lfc", "文件名称： " + str_filename);
+// TODO: 2018/8/30  这里需要权限处理
 
         request_down.setDestinationInExternalPublicDir("/WebX5/", str_filename);
         request_down.setAllowedOverRoaming(true);//漫游网络是否可以下载

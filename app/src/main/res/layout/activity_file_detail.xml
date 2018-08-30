@@ -5,11 +5,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.lfc.textx5.text2.view.WebView_X5
-        android:id="@+id/web_x5"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </com.lfc.textx5.text2.view.WebView_X5>
+        <com.lfc.textx5.text2.view.WebView_X5
+            android:id="@+id/web_x5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.lfc.textx5.text2.view.WebView_X5>
+        <!--这个view 可以用来  拦截点击事件 顺便提示用户 购买！-->
+        <TextView
+            android:id="@+id/tv_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00ffffff"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
 
 </RelativeLayout>
