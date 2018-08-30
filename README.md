@@ -3,7 +3,7 @@ tbs x5 webview 打开office 文件(毕竟IOS webview自带这种功能，android
 
 原理：实际是把文件下载之后 用webview 打开（原生webview 好像不具备这个）
 
-TODO 优化：处理一下打开方式  避免每次打开都需要加载好久！
+ps：demo中没有添加权限判断 自行打开权限判断
 
 内部原理 可以看腾讯X5内核 官方文档 https://x5.tencent.com/tbs/guide/sdkInit.html
 
