@@ -145,9 +145,11 @@ public class FileDetail_A extends AppCompatActivity {
 
         request_down.setDestinationInExternalPublicDir("/WebX5/", str_filename);
         request_down.setAllowedOverRoaming(true);//漫游网络是否可以下载
-
+        /**设置通知栏是否可见*/
+        request_down.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
 //获取下载管理器
         downloadManager = (DownloadManager) baseContext.getSystemService(Context.DOWNLOAD_SERVICE);
+
 //将下载任务加入下载队列，否则不会进行下载
         //加入下载队列后会给该任务返回一个long型的id，
         //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
