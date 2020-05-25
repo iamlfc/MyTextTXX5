@@ -33,7 +33,7 @@ import java.util.TimeZone;
  * 文件详情
  *
  * @author Administrator-LFC
- *         created at 2018/8/4 14:48
+ * created at 2018/8/4 14:48
  */
 
 
@@ -169,7 +169,7 @@ public class FileDetail_A extends AppCompatActivity {
         //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
         mTaskId = downloadManager.enqueue(request_down);
         //注册广播接收者，监听下载状态
-        baseContext.registerReceiver(receiver,
+        registerReceiver(receiver,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
 
@@ -331,11 +331,17 @@ public class FileDetail_A extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         LgU.d("FileDisplayActivity-->onDestroy");
+
+        try {
+            unregisterReceiver(receiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (mWebX5 != null) {
             mWebX5.onStopDisplay();
         }
+        super.onDestroy();
     }
 
 
